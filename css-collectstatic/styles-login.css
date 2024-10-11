@@ -1,0 +1,137 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Lato', sans-serif;
+}
+
+body {
+    background-color: #f3f3f3;
+}
+
+.title > h1 {
+    text-align: center;
+    font-size: 60px;
+    color: transparent;
+    background: linear-gradient(45deg, #fca50a, #0099e9);
+    background-clip: text;
+    -webkit-background-clip: text;
+    text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.9);
+}
+
+/* Estilos del contenedor de login */
+.login-container {
+    max-width: 400px;
+    margin: 50px auto;
+    background: linear-gradient(to bottom, #f5f5f5, #e0e0e0);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+h1 {
+    color: #fdb813; /* Cambiado a un tono de verde */
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+/* Estilos del formulario */
+.form-group {
+    margin-bottom: 20px;
+    text-align: left; /* Alinea los títulos a la izquierda */
+}
+
+label {
+    color: #23282b;
+    font-size: 18px;
+    display: block; /* Asegura que cada título esté en una nueva línea */
+    margin-bottom: 5px; /* Añade un pequeño espacio entre el título y el campo */
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid transparent; /* Borde transparente por defecto */
+    background: rgba(255, 255, 255, 0.9); /* Fondo con transparencia */
+    font-size: 16px;
+    font-weight: 400;
+    color: #23282b;
+    border-radius: 5px;
+    margin-top: 5px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sutil sombra */
+    transition: border 0.3s ease; /* Transición para el borde */
+    outline: none; /* Quita el borde predeterminado del input al hacer clic */
+}
+
+@media screen and (max-width: 600px) {
+    /* Estilos para pantallas pequeñas */
+    .form-group {
+        text-align: center; /* Centra los títulos en pantallas pequeñas */
+    }
+
+    input {
+        width: calc(100% - 24px); /* Ajusta el ancho del input para centrarlo */
+    }
+}
+
+input:focus {
+    border: 2px solid #fca50a; 
+}
+
+.form-group:focus-within input {
+    border: 2px solid #fca50a; 
+}
+
+a.forgot-password {
+    color: #23282b;
+    text-decoration: none;
+    font-size: 14px;
+    margin-top: 10px;
+    display: block;
+    text-align: center;
+}
+
+a.forgot-password:hover {
+    color: #fca50a;
+    transition: all 200ms;
+}
+
+a.no-account {
+    color: #23282b;
+    text-decoration: none;
+    font-size: 14px;
+    margin-top: 10px;
+    display: block;
+    text-align: center;
+
+}
+
+a.no-account:hover {
+    color: #fca50a;
+    transition: all 200ms;
+}
+
+.submit-btn {
+    background-color: #fdb813;
+    color: #23282b;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.4s ease;
+    margin-top: 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sutil sombra */
+}
+
+.submit-btn:hover {
+    background-color: #fca50a;
+}
+
+.alert-danger {
+    background-color: #f44336; /* Color rojo */
+    color: #fff; /* Texto blanco */
+    padding: 10px; /* Espaciado interno */
+    margin-bottom: 20px; /* Margen inferior para separar del contenido */
+    border-radius: 5px; /* Esquinas redondeadas */
+}

@@ -1,0 +1,312 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Lato', sans-serif;
+}
+
+.alert-container {
+    margin-bottom: 20px;
+}
+
+.alert-success {
+    background-color: #5cb85c; /* Verde para éxito */
+    color: #fff; /* Texto blanco */
+    padding: 10px; /* Espaciado interno */
+    border-radius: 5px; /* Esquinas redondeadas */
+}
+
+.alert-danger {
+    background-color: #f44336; /* Rojo para error */
+    color: #fff; /* Texto blanco */
+    padding: 10px; /* Espaciado interno */
+    border-radius: 5px; /* Esquinas redondeadas */
+}
+
+body {
+    background-color: #f3f3f3;
+}
+
+.container{
+    display: flex;
+    height: 100%;
+}
+
+.title > h1 {
+    text-align: center;
+    font-size: 60px;
+    color: transparent;
+    background: linear-gradient(45deg, #fca50a, #0099e9);
+    background-clip: text;
+    -webkit-background-clip: text;
+    text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.9);
+}
+
+.separador-container {
+    height: auto;
+    width: 15%;
+    margin-left: 12%;
+    background-color: #fff;
+    box-shadow: -5px 0px 3px rgba(0, 0, 0, 0.1), 5px 0px 3px rgba(0, 0, 0, 0.1), 0px 3px 3px rgba(0, 0, 0, 0.1);
+
+}
+
+.in-separador-container{
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+}
+
+.initial-form-container{
+    align-items: center;
+    margin-top: 10px;
+}
+
+.initial-form-text {
+    text-align: center;
+    font-size: 18px;
+    white-space: nowrap;
+    overflow: hidden;
+    background: linear-gradient(to right, #fca50a, #0099e9, #fca50a);
+    -webkit-background-clip: text;
+    color: transparent;
+    animation: cambioColor 5s linear infinite;
+}
+
+@keyframes cambioColor {
+    0% {
+        color: #fca50a;
+    }
+    50% {
+        color: #0099e9;
+    }
+    100% {
+        color: #fca50a;
+    }
+}
+
+.opcion {
+    padding: 8px;
+    cursor: pointer;
+    margin: 0;
+
+}
+
+.opcion:hover {
+    background-color: #fca50a;
+    transition: all 200ms;
+}
+
+/* Estilos del contenedor de configuraciones */
+.configuraciones-container {
+    max-width: 600px;
+    max-height: 1000px;
+    margin-top: 0.33%;
+    margin-left: 0.5%;
+    background: linear-gradient(to bottom, #f5f5f5, #e0e0e0);
+    border-radius: 3px;
+    padding: 20px;
+    box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    height: 2000px;
+}
+
+/* Estilos del formulario */
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    color: #23282b;
+    font-size: 18px;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid transparent;
+    background: rgba(255, 255, 255, 0.9);
+    font-size: 16px;
+    font-weight: 400;
+    color: #23282b;
+    border-radius: 5px;
+    margin-top: 5px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: border 0.3s ease;
+    outline: none;
+}
+
+input:focus {
+    border: 2px solid #fca50a; 
+}
+
+.submit-btn {
+    background-color: #fdb813;
+    color: #23282b;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.4s ease;
+    margin-top: 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.submit-btn:hover {
+    background-color: #fca50a;
+    transition: all 200ms;
+}
+
+.opcion{
+    width: 200px;
+    height: auto;
+    margin-left: 12%;
+    margin-top: 7%;
+    background-color: #fff;
+    box-shadow: -5px 0px 3px rgba(0, 0, 0, 0.1), 5px 0px 3px rgba(0, 0, 0, 0.1), 0px 3px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para el contenedor del cuadro */
+.product-box {
+    position: relative; /* Añade posición relativa al contenedor del producto */
+    background-color: #f8f9fa; /* Color de fondo */
+    border: 1px solid #ced4da; /* Borde */
+    border-radius: 8px; /* Bordes redondeados */
+    padding: 20px; /* Espaciado interno */
+    margin-top: 10px;
+    margin-bottom: 10px; /* Margen inferior */
+    transition: all 0.3s ease; /* Transición suave */
+    margin-bottom: 10px; /* Espacio vertical entre cada cuadro de producto */
+
+}
+
+.product-box .product {
+    margin-bottom: 10px; /* Margen inferior */
+    font-size: 16px; /* Tamaño de fuente */
+    color: #212529; /* Color del texto */
+}
+
+.product-box:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra al hacer hover */
+    transform: translateY(-5px); /* Desplazamiento hacia arriba al hacer hover */
+}
+
+.product-box:hover .product {
+    color: #007bff; /* Cambio de color del texto al hacer hover */
+}
+
+.desplegable {
+    display: none;
+    position: fixed; /* Fijo para asegurar que el menú se mantenga en la misma posición */
+    top: 50px; /* Ajusta según tus necesidades */
+    right: 50px; /* Ajusta según tus necesidades */
+    width: 300px;
+    height: 100%;
+
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    z-index: 1; /* Asegura que el menú desplegable esté por encima del contenido */
+}
+
+
+.product-box .desplegable {
+    display: block; /* Muestra el menú desplegable al hacer clic en el contenedor del producto */
+}
+
+.producto-info {
+    margin-bottom: 5px;
+}
+
+.producto-info p {
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+.producto-info input {
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+/* Estilo para el hover */
+.product-box:hover {
+    background-color: #e0e0e0;
+}
+
+/* Estilo para el hover */
+.producto-cuadro:hover {
+    background-color: #e0e0e0;
+}
+
+/* Contenedor del formulario */
+.form-text {
+    position: relative; /* Necesario para la posición relativa del desplegable fijo */
+}
+  
+/* Desplegable fijo */
+#desplegable-fixed {
+    position: absolute; /* Permite la colocación precisa en relación con el contenedor */
+    top: -80; /* Ajusta la posición en la parte inferior del contenedor (puede ser `top`, `bottom`, `left`, o `right`) */
+    right: -550; /* Ajusta la posición en la parte derecha del contenedor */
+    width: 100%; /* Ajusta el ancho según sea necesario */
+    background-color: white; /* Fondo blanco o color de tu elección */
+    border: 1px solid #ddd; /* Borde opcional */
+    padding: 10px; /* Espaciado interno */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Sombra opcional */
+    display: none; /* Oculto por defecto; se mostrará al hacer clic */
+    z-index: 1000; /* Asegura que esté sobre otros elementos */
+}
+
+@media (max-width: 1475px) {
+
+    .separador-container {
+        height: auto;
+        width: 200px;
+        margin-left: 0%;
+        background-color: #fff;
+        box-shadow: -5px 0px 3px rgba(0, 0, 0, 0.1), 5px 0px 3px rgba(0, 0, 0, 0.1), 0px 3px 3px rgba(0, 0, 0, 0.1);
+    
+    }
+
+    .opcion {
+        width: 138px;
+    }
+}
+
+@media (max-width: 1220px) {
+    .configuraciones-container {
+        max-width: 500px;
+        height: 2000px;
+    }
+
+    .title > h1 {
+        font-size: 50px;
+    }
+
+    #desplegable-fixed {
+        position: absolute; /* Permite la colocación precisa en relación con el contenedor */
+        top: -88; /* Ajusta la posición en la parte inferior del contenedor (puede ser `top`, `bottom`, `left`, o `right`) */
+        right: -500; /* Ajusta la posición en la parte derecha del contenedor */
+        width: 100%; /* Ajusta el ancho según sea necesario */
+    }
+}
+
+@media (max-width: 1035px) {
+    .configuraciones-container {
+        max-width: 500px;
+
+    }
+
+    .title > h1 {
+        font-size: 30px;
+    }
+
+    #desplegable-fixed {
+        position: absolute; /* Permite la colocación precisa en relación con el contenedor */
+        top: -60; /* Ajusta la posición en la parte inferior del contenedor (puede ser `top`, `bottom`, `left`, o `right`) */
+        right: -300; /* Ajusta la posición en la parte derecha del contenedor */
+        width: 100%; /* Ajusta el ancho según sea necesario */
+    }
+}

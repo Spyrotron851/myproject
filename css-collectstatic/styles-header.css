@@ -1,0 +1,492 @@
+/* Estilos generales para el header */
+#header {
+  background-color: #fff;
+  box-shadow: 0px 1px 3px rgba(0,0,0,0.3);
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
+}
+
+.container__header {
+  margin: 10px;
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  list-style: none; 
+}
+
+/* Estilos para el logo */
+#logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* Estilos para la navegación */
+.container__nav {
+  display: flex;
+  align-items: center;
+}
+
+#nav {
+  margin-left: 20px;
+}
+
+#nav ul {
+  list-style: none;
+  display: flex;
+  align-items: center;
+}
+
+#nav ul li {
+  margin: 0 10px;
+}
+
+#nav ul li a {
+  text-decoration: none;
+  font-size: 16px;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.2s ease-in-out;
+}
+
+#nav ul li a:hover {
+  color: #fdb813;
+}
+
+/* Estilos para el botón de menú */
+.btn__menu {
+  display: none;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 910px) {
+  .container__nav {
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+  }
+
+  #nav {
+    margin-left: 0;
+    margin-bottom: 20px;
+  }
+
+  #nav ul {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #nav ul li {
+    margin: 10px 0;
+  }
+
+  .btn__menu {
+    display: block;
+  }
+
+  .config-icon{
+    margin-right: 25px;
+  }
+}
+
+/* ... (resto del código) ... */
+
+/* Estilos para el botón de búsqueda */
+
+#btn__search {
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+#btn__search:hover {
+  color: #fdb813;
+}
+
+#form__search {
+  position: absolute;
+  top: 70px;
+  right: 0;
+  left: 0;
+  margin: auto;
+  display: none;
+  width: 60%;
+  max-width: 400px;
+  height: 50px;
+  background-color: #fff;
+  border: 2px solid #333;
+  border-radius: 25px;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+@media screen and (max-width: 910px) {
+  /* Mostrar el formulario de búsqueda en dispositivos con una resolución menor a 768px */
+  #form__search {
+    display: block;
+    width: 100%;
+    max-width: none;
+    border-radius: 0; /* Eliminar el redondeo en la resolución menor a 768px */
+  }
+
+  #form__search input[type="text"] {
+    min-width: 60px;
+    width: 60px; /* Ancho inicial del input */
+    transition: width 0.3s ease; /* Transición suave */
+  }
+
+  .search-input::placeholder {
+    /* Ocultar el placeholder cuando la pantalla sea menor a 768px */
+    visibility: hidden;
+  }
+
+  .search-form .search-bar {
+    width: 100%;
+  }
+
+  .search-form .search-input {
+    width: 75%; /* Establecer el ancho del input de texto al 100% */
+    display: inline-block;
+    vertical-align: top;
+    padding-left: 0; /* Eliminar el espacio a la izquierda del input de texto */
+    margin-left: 5px;
+    margin-bottom: 5px;
+  }
+
+  .search-form .search-btn {
+    width: 25%; /* Establecer el ancho del botón de búsqueda al 100% */
+    min-width: 0; /* Establecer el ancho mínimo del botón de búsqueda a 0 */
+  }
+}
+
+
+#form__search input[type="text"].expanded {
+  width: 200%; /* Tamaño expandido */
+  padding: 12px; /* Ajustar el relleno según sea necesario */
+  border: 2px solid #333; /* Agregar un borde para resaltar el input expandido */
+  visibility: visible;
+}
+
+
+#form__search input[type="text"] {
+  border: none;
+  outline: none;
+  width: 90%;
+  height: 100%;
+  font-size: 16px;
+  color: #333;
+  padding-left: 10px;
+  box-sizing: border-box;
+}
+
+#form__search input[type="submit"] {
+  display: none;
+}
+
+/* Estilos para la barra de búsqueda */
+.search-form {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.search-bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 200%;
+  max-width: 700px;
+  height: 50px;
+  background-color: #fff;
+  border-radius: 25px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.search-input:focus {
+  outline: none;
+}
+
+.search-input {
+  flex-grow: 1;
+  height: 120%;
+  padding: 0 20px;
+  border: none;
+  width: 230px;
+  font-size: 18px;
+  color: #666;
+  background-color: transparent;
+  transition: width 0.3s ease-in-out;
+
+}
+
+.search-input::placeholder {
+  color: #999;
+}
+
+.search-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50px;
+  height: 100%;
+  border: none;
+  background-color: #f5f5f5;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.search-btn:hover {
+  background-color: #fdb813;
+  color: #fff;
+}
+
+.search-btn:focus {
+  outline: none;
+}
+
+/* Estilos para el botón de carrito de compras */
+.--icons--{
+  display: flex;
+  margin-right: 5px;
+}
+
+.notification-icon {
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  color: #333;
+  cursor: pointer;
+  margin-right: 18px;
+  margin-left: 10px;
+
+}
+
+.cart-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 100%;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  margin-right: 10px;
+
+}
+
+.cart-btn:hover, .notification-icon:hover, .config-icon:hover{
+  color: #fdb813;
+  transform: scale(1.2); /* Transición de escala */
+  transition: 200ms;
+}
+
+.cart-link {
+  text-decoration: none; /* Elimina cualquier subrayado */
+  color: inherit; /* Utiliza el color del texto heredado */
+}
+
+.cart-link:hover {
+  color: #fdb813; /* Cambia el color al pasar el mouse */
+}
+
+.cart-btn, .notification-icon {
+  font-size: 28px; /* Tamaño del ícono del carrito */
+  color: #333;
+}
+
+.cart-btn:hover .cart-icon, .notification-icon:hover {
+  color: #fdb813;
+}
+
+.cart-btn a, .notification-icon {
+  text-decoration: none;
+  color: inherit;
+}
+
+.cart-btn a:hover, .notification-icon {
+  text-decoration: none;
+}
+
+
+/* Estilos para la URL del carrito de compras */
+.cart-btn{
+  text-decoration: none;
+  color: inherit;
+}
+
+.cart-btn:hover{
+  text-decoration: none;
+}
+
+
+.notification-count {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  background-color: #fdb813;
+  color: white;
+  font-size: 12px;
+  border-radius: 50%;
+}
+
+
+.notification-list {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  min-width: 200px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  list-style-type: none;
+  padding: 0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.notification-list li {
+  padding: 10px;
+}
+
+.notification-list li:not(:last-child) {
+  border-bottom: 1px solid #ccc;
+}
+
+/* Efecto de hover para desplegar el menú */
+
+.notification-content {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #fff;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.notification-icon:hover .notification-content {
+  display: block;
+}
+
+#notification-message {
+  display: none;
+  position: absolute;
+  width: 200px;
+  padding: 10px;
+  background-color: #f5f5f5;
+  border: 1px solid #333;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 18px;
+  color: #333; /* Texto en blanco para mejor legibilidad */
+  z-index: 9999;
+  opacity: 0; /* Inicialmente, el cuadro está oculto */
+  transition: opacity 0.3s ease-in-out; /* Agrega una transición suave */
+}
+
+#notification-message button {
+  background-color: #fdb813; /* Color verde */
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  position: absolute; /* Posición absoluta para poder ubicarlo */
+  top: 5px; /* Distancia desde la parte superior del cuadro de notificación */
+  right: 5px; /* Distancia desde la parte izquierda del cuadro de notificación */
+}
+
+/* Cambiar el cursor al pasar sobre la campana */
+.notification-icon {
+  cursor: pointer;
+}
+
+.config-icon{
+  font-size: 28px;
+  cursor: pointer;
+  margin-left: 20px;
+  scale: 125%;
+  margin-top: 5px;
+  color: #333;
+  margin-right: 10px;
+}
+
+li{
+  list-style-type: none;
+}
+
+.notification-dot{
+  color: black;
+}
+
+
+
+/* Agregar estos estilos al final de tu archivo CSS */
+#mobile-menu {
+  display: none;
+  position: absolute;
+  top: 80px; /* Altura del header */
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+}
+
+#mobile-menu ul {
+  list-style: none;
+  padding: 20px;
+}
+
+#mobile-menu ul li {
+  margin-bottom: 10px;
+}
+
+#mobile-menu ul li a {
+  text-decoration: none;
+  font-size: 16px;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.2s ease-in-out;
+}
+
+#mobile-menu ul li a:hover {
+  color: #fdb813;
+}
+
+@media screen and (max-width: 910px) {
+  #nav {
+    display: none;
+  }
+
+  #mobile-menu {
+    display: none;
+  }
+}
+
+.alert-danger {
+  background-color: #f44336; /* Color rojo */
+  color: #fff; /* Texto blanco */
+  padding: 10px; /* Espaciado interno */
+  margin-bottom: 20px; /* Margen inferior para separar del contenido */
+  border-radius: 5px; /* Esquinas redondeadas */
+}

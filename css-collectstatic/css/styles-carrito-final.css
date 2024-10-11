@@ -1,0 +1,213 @@
+.alert-danger {
+  background-color: #f44336;
+  color: #fff;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+
+.table-wrapper {
+  width: 60%;
+  margin: 0 auto;
+  margin-left: 10%;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 2px solid #dddddd;
+  padding: 6px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.payment-methods {
+  margin-top: 20px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.payment-method {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.payment-method img {
+  width: 120px;
+  height: auto;
+}
+
+.progress-table {
+  width: 40%;
+  margin: 0 auto;
+}
+
+.progress-step {
+  text-align: center;
+  padding: 20px 0;
+  cursor: pointer;
+  position: relative;
+}
+
+.progress-step.active:after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 2px;
+  background-color: orange;
+}
+
+.section-container {
+  margin-top: 20px;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.section {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 800px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: none;
+}
+
+.section h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.payment-option {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+
+.payment-option:hover {
+  background-color: #f0f0f0;
+}
+
+.payment-option input[type="radio"] {
+  margin-right: 15px;
+}
+
+.payment-option img, .payment-option i {
+  width: 40px;
+  margin-right: 15px;
+}
+
+.payment-option label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  width: 100%;
+}
+
+.payment-option span {
+  font-size: 16px;
+}
+
+.nav-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+/* Estilos para el botón Siguiente */
+#next-button {
+  margin-top: 20px;
+  background-color: #fdb813;; /* Color de fondo verde */
+  color: #fff; /* Color del texto blanco */
+  border: none; /* Sin borde */
+  padding: 10px 20px; /* Espaciado interno */
+  font-size: 16px; /* Tamaño de la fuente */
+  cursor: pointer; /* Cambia el cursor al pasar por encima */
+  border-radius: 4px; /* Bordes redondeados */
+  transition: background-color 0.3s ease; /* Transición suave para el color de fondo */
+}
+
+#next-button:hover {
+  background-color: #fca50a; /* Color de fondo al pasar por encima */
+}
+
+#contactar-vendedor {
+  background-color: #fdb813;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+  align-self: flex-start;
+}
+
+#contactar-vendedor:hover {
+  background-color: #fca50a;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  background-color: #f4f4f4;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+
+/* Estilos de los pasos de progreso */
+.progress-step {
+  text-align: center;
+  padding: 20px 0;
+  cursor: pointer;
+  position: relative;
+}
+
+.progress-step.active:after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 2px;
+  background-color: orange; /* Color de la línea activa */
+}
+
+.payment-option {
+  display: flex;
+  align-items: center;
+}
+
+.payment-option input[type="radio"] {
+  margin-right: 10px; /* Ajusta el espacio entre el radio button y el texto */
+}
+
+.payment-option span.payment-status {
+  margin-left: 50px; /* Separación entre el título y el estado (disponible/no disponible) */
+}
