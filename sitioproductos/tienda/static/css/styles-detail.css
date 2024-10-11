@@ -1,0 +1,33 @@
+.contenedor{
+    display: flex;
+    border: 2px solid green
+}
+
+#imagendetail{
+    margin-left: 10%;
+    padding: 10px;
+    border: 2px solid red;
+    height: 580px;
+    width: 440px;
+}
+
+
+
+#titulo{
+    color:#359EF9;
+    margin-left: 20px;
+    padding: 10px;
+    font-size: 50px;
+}
+
+.comprar{
+    border: 2px solid white;
+    width: 100%;
+    height: 100px;
+    font-family: 'Poppins', sans-serif;
+    top: 0;
+    right: 0;
+    z-index: 100;
+    background-color: #359EF9;
+    transition: all 300ms;
+}

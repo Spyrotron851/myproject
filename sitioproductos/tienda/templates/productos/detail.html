@@ -1,0 +1,42 @@
+{% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles-detail.css'%}" />
+
+{% include 'productos/header.html' %}
+
+ <br>
+ <br> <br> <br> <br> <br> <br>
+<html> 
+    <body>
+        <main>
+            <div class="contenedor">
+                <div id="imagendetail">
+                    {% if article.image != 'null' and article.image.url|length >= 1 %}
+                        <div class="image">
+                            <img src="{{ article.image.url }}" id="imagen2"/>  
+                        </div>                              
+                    {% endif %}
+                </div>
+                <hr>
+                <div class="informacion">
+                    <div id="titulo">
+                        {{article.title}}
+                    </div>
+                    <div class="Comprar">
+                        <a href="#">
+                            <h3>Comprar</h3>
+                        </a>
+                    </div>                        
+                    <div id="descripcion_article">                         
+                        <p>{{article.content|safe}}</p>
+                        <input type="button" value="Leer Más" >
+
+                    </div>
+                </div>
+
+
+            </div>
+        </main>
+    </body>
+</html>
+
+

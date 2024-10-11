@@ -1,0 +1,27 @@
+{% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles-publicar.css'%}" />
+
+<h1>Hola</h1>
+
+<body>
+    <form method="POST" action={% url 'publicar'%} enctype="multipart/form-data">
+        {% csrf_token %}
+        <div id="caja-publicar">
+            <div id="publicar-form">
+                <div id="formularios-publicar">
+                    {%for field in publicarform%}
+                        <label>{{field.label}}</label>
+                        <br>
+                        {{field}}
+                        <br>
+                    {% endfor %}
+
+                    <input type="submit" value="Create" id="enviar"/> 
+                    
+                </div>
+            </div>
+        </div>
+
+
+    </form>
+</body>
