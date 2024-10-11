@@ -1,0 +1,9 @@
+<!-- verificar_mensajes.html -->
+<h1>Verificar Mensajes</h1>
+<p>Mensaje Anterior: {{ mensaje_anterior }}</p>
+<p>Mensaje Actual: {{ mensaje_actual }}</p>
+
+{% if mensaje_anterior != "" %}
+    <p>Mensaje Anterior: {{ mensaje_anterior }}</p>
+{% endif %}
+<p>Mensaje Actual: {{ mensaje_actual }}</p>

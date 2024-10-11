@@ -1,0 +1,72 @@
+{% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}" />
+
+{% include 'productos/header.html' %}
+
+
+<html> 
+    <body>
+        <main>
+            <div class="contenedor">
+                {% for producto in productos %}
+                    <div class="card__father">
+                        <input type="checkbox" id="card-{{ forloop.counter }}" class="card-checkbox" />
+                        <div class="card">
+                            <label for="card-{{ forloop.counter }}">
+                                <div class="card__front">
+                                    <div class="image">
+                                        {% if producto.image %}
+                                            <img src="{{ producto.image.url }}" alt="Producto Image" />
+                                        {% else %}
+                                            <div class="no-image"></div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="price">
+                                        <i class="fas fa-dollar-sign">{{ producto.precio }} USD</i> 
+                                    </div>
+                                </div>
+                                <div class="card__back">
+                                    <div class="info">
+                                        <div class="category">
+                                            <p>
+                                                Categoría: 
+                                                <br>
+                                                {{ producto.categories.name }}
+                                            </p>
+                                        </div>
+
+                                        <div class="user">
+                                            <i class="fas fa-user"></i>
+                                            <p>{{ producto.user.username }}</p>
+                                        </div>
+                                    </div> 
+
+                                    <div class="body__card_back">
+                                        <h2>{{ producto.title }}</h2>
+                                        <div class="description_producto">
+                                            <p>{{ producto.content|safe }}</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="leermas">
+                                        <a href="{% url 'article' producto.id %}">Leer Más</a>
+                                    </div>
+
+                                    <!-- Aquí puedes agregar tu formulario si es necesario -->
+                                    <!-- Botón del carrito -->
+                                    <form action="{% url 'agregar_al_carrito' producto.id %}" method="post">
+                                        {% csrf_token %}
+                                        <button class="add-to-cart" type="submit">
+                                            <i class="fas fa-shopping-cart"></i>
+                                        </button>
+                                    </form>
+
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </main>
+    </body>
+</html>

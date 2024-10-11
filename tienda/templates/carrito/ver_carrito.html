@@ -1,0 +1,69 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles-carrito.css' %}" />
+
+<!-- Header -->
+{% include 'productos/header.html' %}
+
+<div class="container">
+  <h1>Carrito de Compras</h1> 
+
+  <div class="cart-items">
+    {% for item in items %}
+      <div class="cart-item">
+        <div class="cart-item-content-up">
+          <img src="{{ item.get_producto.image.url }}" alt="Product Image" width="200" height="200">
+          <div class="cart-item-details">
+            <div class="cart-item-title">
+              <h2>{{ item.producto.title }}</h2>
+            </div>
+            <div class="cart-item-price">
+              <p><strong>Precio:</strong> <br> {{ item.producto.precio }}</p>
+            </div>
+            <div class="cart-item-quantity">
+              <p><strong>Cantidad:</strong> <br> {{ item.cantidad }}</p>
+            </div>
+            <div class="cart-item-subtotal">
+              <p><strong>Subtotal:</strong>  <br> {{ subtotal }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="cart-item-content-down">
+          <div class="cart-item-button-all">
+            <form action="{% url 'eliminar_del_carrito' item.producto.id %}" method="post" class="delete-form">
+              {% csrf_token %}
+              <input type="hidden" name="producto_id" value="{{ item.producto.id }}">
+              <button type="submit" class="delete-button">Eliminar todos</button>
+            </form>
+          </div>
+          <div class="cart-item-button-one">
+            <form action="{% url 'eliminar_un_producto' item.producto.id %}" method="post" class="delete-form">
+              {% csrf_token %}
+              <input type="hidden" name="producto_id" value="{{ item.producto.id }}">
+              <button type="submit" class="delete-button">Eliminar uno</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+
+    {% empty %}
+      <p class="empty-cart-message">No hay elementos en el carrito</p>
+    {% endfor %}
+  </div>
+
+  <div class="cart-summary">
+    <h2>Resumen del Carrito</h2>
+    <p>Total: {{ total }}</p>
+    <form action="{% url 'carrito-final' %}" method="post" class="delete-form">
+      {% csrf_token %}
+      <input type="hidden" name="producto_id" value="{{ item.producto.id }}">
+      <button type="submit" class="delete-button">Continuar</button>
+    </form>
+  </div>
+</div>
+
+{% for notificacion in notificaciones %}
+    <div class="notificacion">
+        <p>{{ notificacion.mensaje }}</p>
+    </div>
+{% endfor %}

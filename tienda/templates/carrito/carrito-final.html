@@ -1,0 +1,166 @@
+{% load static %}
+{% include 'productos/header.html' %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confirmar Compra</title>
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  <link rel="stylesheet" href="{% static 'css/styles-carrito-final.css' %}">
+  <script type="module" src="https://src.mastercard.com/srci/integration/components/src-ui-kit/src-ui-kit.esm.js"></script>
+  <link rel="stylesheet" href="https://src.mastercard.com/srci/integration/components/src-ui-kit/src-ui-kit.css">
+</head>
+
+<body>
+  <!-- Header -->
+
+  <h2>Confirmar Compra</h2>
+
+  <!-- Barra de progreso -->
+  <div class="progress-table">
+    <table>
+      <tr>
+        <td class="progress-step" id="step1">Tabla Final</td>
+        <td class="progress-step" id="step2">Método de Pago</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- Sección 1: Tabla Final -->
+  <div class="section" id="section1">
+    <h1>Tabla Final</h1>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in items %}
+          <tr>
+            <td>{{ item.producto.title }}</td>
+            <td>${{ item.producto.precio }}</td>
+            <td>{{ item.cantidad }}</td>
+            <td>${{ item.subtotal }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="3"><strong>Total a Pagar:</strong></td>
+            <td><strong>${{ total }}</strong></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+    <button id="next-button" onclick="showSection(2)">Siguiente</button>
+
+  </div>
+
+  <!-- Sección 2: Método de Pago -->
+  <div class="section" id="section2" style="display: none;">
+    <h1>Método de Pago</h1>
+    <div class="formas-pago">
+      <form id="payment-form" method="post">
+        {% csrf_token %}
+        <label class="payment-option">
+          <input type="radio" name="payment-method" value="paypal" data-available="{{ paypal_available }}"> PayPal
+          {% if paypal_available %}
+          <span class="payment-status" style="color: green;">Disponible</span>
+          {% else %}
+          <span class="payment-status" style="color: red;">No disponible</span>
+          {% endif %}
+        </label><br>
+<!--
+        <label>
+            <input type="radio" name="payment-method" value="contact-seller" data-available="{{ mail_available }}"> Contactar al Vendedor
+            {% if mail_available %}
+            <span style="color: green;">Disponible</span>
+            {% endif %}
+            {% if not mail_available %}
+                <span style="color: red;">No disponible</span>
+            {% endif %}
+        </label><br>
+-->
+        <label class="payment-option">
+          <input type="radio" name="payment-method" value="whatsapp" data-url="{{ whatsapp_url }}"> WhatsApp
+          {% if whatsapp_available %}
+          <span class="payment-status" style="color: green;">Disponible</span>
+          {% else %}
+          <span class="payment-status" style="color: red;">No disponible</span>
+          {% endif %}
+        </label><br>
+
+        <!-- Contenedor para los botones de navegación y pago -->
+        <div class="nav-buttons">
+            <button type="button" id="next-button" onclick="showSection(1)">Anterior</button>
+            <button type="submit" id="next-button">Pagar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function showSection(sectionNumber) {
+      // Ocultar todas las secciones
+      var sections = document.getElementsByClassName("section");
+      for (var i = 0; i < sections.length; i++) {
+          sections[i].style.display = "none";
+      }
+
+      // Mostrar la sección seleccionada
+      var selectedSection = document.getElementById("section" + sectionNumber);
+      selectedSection.style.display = "block";
+
+      // Actualizar la clase activa en la barra de progreso
+      var progressSteps = document.getElementsByClassName("progress-step");
+      for (var i = 0; i < progressSteps.length; i++) {
+          progressSteps[i].classList.remove("active");
+      }
+      progressSteps[sectionNumber - 1].classList.add("active");
+    }
+
+    document.getElementById('payment-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const selectedPaymentMethod = document.querySelector('input[name="payment-method"]:checked');
+      
+      if (selectedPaymentMethod) {
+          const isAvailable = selectedPaymentMethod.closest('label').querySelector('span').textContent === 'Disponible';
+
+          if (!isAvailable) {
+              alert('El método de pago seleccionado no está disponible. Por favor, seleccione otro.');
+              return;
+          }
+
+          switch (selectedPaymentMethod.value) {
+              case 'paypal':
+                  this.action = "{% url 'realizar_pago_paypal' %}";
+                  break;
+              case 'whatsapp':
+                  const whatsappUrl = selectedPaymentMethod.getAttribute('data-url');
+                  window.open(whatsappUrl, '_blank');
+                  return;  // Salir de la función, no enviar el formulario
+              default:
+                  alert('Por favor, selecciona un método de pago.');
+                  return;
+          }
+          this.submit();
+      } else {
+          alert('Por favor, selecciona un método de pago.');
+      }
+    });
+
+    // Inicializar la primera sección
+    document.addEventListener("DOMContentLoaded", function() {
+      showSection(1); // Mostrar la primera sección al cargar la página
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!-- Header -->
+{% include 'productos/header.html' %}
+
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles-publicar.css' %}" />
+
+{% block content %}
+  <div id="caja-publicar">
+    <h1>Crear Producto</h1>
+    <form method="post" enctype="multipart/form-data" id="formularios-publicar">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="title">Titulo:</label>
+        <input type="text" class="form-control" id="title" name="title">
+      </div>
+      <br>
+
+      <div class="form-group">
+        <label for="precio">Precio:</label>
+        <input type="number" class="form-control" id="precio" name="precio" step="0.01" min="0">
+      </div>
+      <br>
+
+      <div class="form-group">
+        <label for="content">Contenido:</label>
+        <br>
+        <input type="text" class="form-control" id="content" name="content">
+      </div>
+      <br>
+
+      <div class="form-group">
+        <label for="image">Imagen:</label>
+        <input type="file" class="form-control" id="image" name="image">
+      </div>
+      <br>
+
+      <div class="form-group">
+        <label for="category">Categoría:</label>
+        <br>
+        <br>
+        <select class="form-control" id="category" name="category">
+          {% for category in categories %}
+            <option value="{{ category.id }}">{{ category.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <br>
+
+      <button type="submit" class="submit-btn">Guardar</button>
+    </form>
+  </div>
+{% endblock %}

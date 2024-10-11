@@ -1,0 +1,228 @@
+{% load static %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles-header.css' %}" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<!-- Script Para Compana de Notificaciones-->
+<script>
+    
+    $(document).ready(function() {
+        var notificationVisible = false;
+
+        // Función para obtener las coordenadas de la campana
+        function getNotificationIconPosition() {
+            var notificationIcon = $('#notification-icon');
+            var iconPosition = notificationIcon.offset();
+            return {
+                left: iconPosition.left + notificationIcon.width() / 2,
+                top: iconPosition.top + notificationIcon.height()
+            };
+        }
+
+        // Función para mostrar el cuadro de texto en la posición de la campana
+        function showNotification() {
+            var notificationMessage = $('#notification-message');
+            var iconPosition = getNotificationIconPosition();
+            notificationMessage.css('left', iconPosition.left);
+            notificationMessage.css('top', iconPosition.top);
+            notificationMessage.css('display', 'block');
+            setTimeout(function() {
+                notificationMessage.css('opacity', '1');
+            }, 10); // Pequeño retraso para asegurar la transición suave
+        }
+
+        // Función para ocultar el cuadro de texto
+        function hideNotification() {
+            var notificationMessage = $('#notification-message');
+            notificationMessage.css('opacity', '0');
+            setTimeout(function() {
+                notificationMessage.css('display', 'none');
+            }, 300); // Tiempo de la transición en milisegundos
+        }
+
+        // Cuando el usuario hace clic en la campana, muestra/oculta el cuadro de texto
+        $('#notification-icon').click(function() {
+            if (notificationVisible) {
+                hideNotification();
+            } else {
+                showNotification();
+            }
+            notificationVisible = !notificationVisible;
+        });
+
+        // Cuando el usuario hace clic en el botón "Ocultar", oculta el cuadro de texto
+        $('#notification-message button').click(function() {
+            hideNotification();
+            notificationVisible = false;
+        });
+    });
+</script>
+
+<!-- Agregar este script al final de tu archivo HTML, antes del cierre del body -->
+<script>
+    $(document).ready(function () {
+      $('#btn_menu').click(function () {
+        $('#mobile-menu').slideToggle();
+      });
+    });
+</script>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchBar = document.getElementById('search-bar');
+        const searchInput = document.getElementById('search-input');
+      
+        function isScreenSmall() {
+          return window.innerWidth < 768; // Define el ancho máximo para considerar como pantalla pequeña
+        }
+      
+        function expandInput() {
+            if (isScreenSmall()) {
+                searchInput.style.width = '300px'; // Cambiar el tamaño a 300px si la pantalla es pequeña
+            }
+        }
+      
+        function shrinkInput() {
+            if (isScreenSmall()) {
+                searchInput.style.width = '150px'; // Volver al tamaño original siempre que pierda el foco
+            }
+        }
+      
+        searchInput.addEventListener('click', expandInput);
+        searchInput.addEventListener('blur', shrinkInput);
+      });
+</script>
+
+
+
+
+
+<header id="header">
+    <div class="container__header">
+        {% if user.email %}
+        <div class="container__nav">
+            <nav id="nav">
+                <ul>
+                    <li><a href="{% url 'list_articles' %}" class="select">PRODUCTOS</a></li>
+                    <li>    
+                        <a href="{% url 'last_visited_article' %}" class="view-last-visited">
+                            Último Producto Visitado
+                        </a>
+                    </li>
+                    <li><a href="{% url 'crear_producto' %}" class="select">Crear Producto</a></li>
+                    <li><a href="{% url 'logout' %}" class="select">Cerrar Sesión</a></li>
+                </ul>
+            </nav>
+            <div class="btn__menu" id="btn_menu"><i class="fas fa-bars"></i></div>
+        </div>
+        {% else %}
+        <div class="container__nav">
+            <nav id="nav">
+                <ul>
+                    <li><a href="{% url 'list_articles' %}" class="select">Home</a></li>
+                    <li><a href="{% url 'login' %}" class="select">Login</a></li>
+                    <li><a href="{% url 'register' %}" class="select">Register</a></li>
+                </ul>
+            </nav>
+            <div class="btn__menu" id="btn_menu"><i class="fas fa-bars"></i></div>
+        </div>
+        {% endif %}
+        <li>
+            <div class="">
+                <i class=""></i>
+            </div>
+        </li>
+    </div>
+
+    {% if user.is_authenticated %}
+        <div id="mobile-menu">
+            <ul>
+            <li><a href="{% url 'list_articles' %}" class="select">PRODUCTOS</a></li>
+            <li><a href="{% url 'crear_producto' %}" class="select">Crear Producto</a></li>
+            <li><a href="{% url 'logout' %}" class="select">Cerrar Sesión</a></li>
+            <li><a href="{% url 'last_visited_article' %}" class="select">view-last-visited</a>Último Producto Visitado</li>
+
+            </ul>
+        </div>
+
+    {% else %}
+        <div id="mobile-menu">
+            <ul>
+                <li><a href="{% url 'list_articles' %}" class="select">PRODUCTOS</a></li>
+                <li><a href="{% url 'login' %}" class="select">Login</a></li>
+                <li><a href="{% url 'register' %}" class="select">Register</a></li>
+            </ul>
+        </div>
+    {% endif %}
+
+    <div class="--icons--">
+        {% if user.is_authenticated %}
+        <li>
+            <div class="notification-icon" id="notification-icon">
+                <i class="fas fa-bell"></i>
+                <span class="notification-count">{{ contador_notificaciones.contador }}</span>
+            </div>
+            <div id="notification-message">
+                <h5>{{ mensaje_actual }}</h5>
+                <button onclick="hideNotification()">X</button>
+
+            </div>
+        </li>
+        <li>
+            <div class="cart-icon" id="notification-icon">
+                <a href="{% url 'ver_carrito' %}" class="cart-link"> <!-- Reemplaza la clase select por cart-link -->
+                    <button type="button" class="cart-btn"><i class="fas fa-shopping-cart"></i></button>
+                </a>
+            </div>
+        </li>
+        {% endif %}
+    </div>
+
+    {% block content %}
+        <form action="{% url 'buscar_productos' %}" method="post" class="search-form">
+            {% csrf_token %}
+            <div id="search-bar" class="search-bar">
+                <input type="text" name="title" id="search-input" class="search-input" placeholder="Buscar productos">
+                <button type="submit" class="search-btn"><i class="fas fa-search"></i></button>
+            </div>
+        </form>
+    {% endblock %}
+
+    {% if user.is_authenticated %}
+        <li>
+            <div class="config" id="config">
+                <a href="{% url 'configuraciones' %}" class="select">  
+                    <div class="config-icon" id="config-icon">                  
+                        <i class="fas fa-cog"></i>
+                    </div>
+                </a>
+            </div>
+        </li>
+    {% endif %}
+</header>
+
+<!-- Mostrar los mensajes anteriores -->
+{% if mensajes_anteriores %}
+    <p>Mensajes Anteriores:</p>
+    <ul>
+        {% for mensaje in mensajes_anteriores %}
+            <li>{{ mensaje }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+{% if messages %}
+    {% for message in messages %}
+        {% if 'no-article' in message.tags %}
+            <div class="alert alert-danger">
+                <ul>
+                    <li>{{ message }}</li>
+                </ul>
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endif %}

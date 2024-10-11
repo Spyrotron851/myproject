@@ -1,0 +1,342 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <!-- Configuración básica del documento -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tu Sitio de Compra Venta</title>
+  <!-- Enlace a la hoja de estilos CSS -->
+  <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}" />
+</head>
+<body>
+
+  <script>
+    let activeCategories = new Set();
+
+    function toggleAnimation(cuadroElement) {
+        // Alternar la clase de animación
+        if (cuadroElement.classList.contains('moved')) {
+            cuadroElement.classList.remove('moved');
+        } else {
+            cuadroElement.classList.add('moved');
+        }
+
+        const category = cuadroElement.getAttribute('data-category');
+
+        // Alternar la categoría en el conjunto de categorías activas
+        if (activeCategories.has(category)) {
+            activeCategories.delete(category);
+            if (activeCategories.size === 0) {
+                showAllCards();
+                updateFilterModeMessage(false);
+            } else {
+                filterCardsByCategories();
+            }
+        } else {
+            activeCategories.add(category);
+            fetchDataFromDjango(category);
+            updateFilterModeMessage(true);
+        }
+    }
+
+    function fetchDataFromDjango(category) {
+        fetch(`/obtener-datos/?categoria=${category}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data); // Mostrar los datos en la consola
+                filterCardsByCategories();
+            })
+            .catch(error => {
+                console.error('Error al obtener los productos filtrados:', error);
+            });
+    }
+
+    function filterCardsByCategories() {
+        const cards = document.querySelectorAll('.card__father');
+        let allCardsHidden = false;
+        
+        // Primero ocultar todas las tarjetas
+        cards.forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(-20px)';
+        });
+
+        setTimeout(() => {
+            cards.forEach(card => {
+                const cardCategory = card.querySelector('.category p').innerText.split(':')[1].trim();
+                if (activeCategories.has(cardCategory)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            allCardsHidden = true;
+        }, 200); // Esperar a que se complete la transición de desaparición
+
+        // Mostrar las tarjetas seleccionadas después de que todas estén ocultas
+        setTimeout(() => {
+            if (allCardsHidden) {
+                cards.forEach(card => {
+                    const cardCategory = card.querySelector('.category p').innerText.split(':')[1].trim();
+                    if (activeCategories.has(cardCategory)) {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }
+                });
+            }
+        }, 210); // Tiempo después de que se haya completado el proceso de ocultación
+    }
+
+    function showAllCards() {
+        const cards = document.querySelectorAll('.card__father');
+        let delay = 0;
+        cards.forEach(card => {
+            card.style.display = 'block';
+            setTimeout(() => {
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+                card.style.transitionDelay = `${delay}s`;
+                delay += 0.1;
+            }, 10); // Delay for transition to apply
+        });
+    }
+
+    function updateFilterModeMessage(isActive) {
+        const filterModeMessage = document.getElementById('filter-mode-message');
+        if (isActive) {
+            filterModeMessage.innerText = 'Modo En Filtro: Encendido';
+            filterModeMessage.classList.add('active');
+            filterModeMessage.classList.remove('inactive');
+        } else {
+            filterModeMessage.innerText = 'Modo En Filtro: Apagado';
+            filterModeMessage.classList.add('inactive');
+            filterModeMessage.classList.remove('active');
+        }
+    }
+
+    function resetFilters() {
+        // Restablecer las categorías activas
+        activeCategories.clear();
+        
+        // Mostrar todas las tarjetas
+        showAllCards();
+        
+        // Actualizar el mensaje de modo de filtro
+        updateFilterModeMessage(false);
+
+        // Reiniciar la animación de los cuadros
+        const cuadros = document.querySelectorAll('.cuadro');
+        cuadros.forEach(cuadro => {
+            cuadro.classList.remove('moved');
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const categoryMenu = document.getElementById('category-menu');
+        categoryMenu.addEventListener('click', function (event) {
+            const categoryElement = event.target.closest('.category');
+            if (categoryElement) {
+                categoryElement.classList.toggle('selected');
+                const category = categoryElement.getAttribute('data-category');
+                const cuadro = document.getElementById(`cuadro_${category}`);
+                toggleAnimation(cuadro);
+            }
+        });
+    });
+  </script>
+  <style>
+    .moved {
+      transform: translateX(30px);
+    }
+    .filter-mode-message {
+      margin-bottom: 10px;
+      padding: 5px;
+      border-radius: 3px;
+      font-size: 14px;
+      font-weight: normal;
+      text-align: center;
+      transition: background-color 0.3s, color 0.3s;
+      width: 100%;
+    }
+    .filter-mode-message.active {
+      background-color: #4caf50;
+      color: white;
+    }
+    .filter-mode-message.inactive {
+      background-color: #f44336;
+      color: white;
+    }
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    #category-menu {
+      list-style: none;
+      padding: 0;
+      width: 100%;
+    }
+
+    .category-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+      width: 100%;
+    }
+
+    .category {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      user-select: none;  /* Prevent text selection */
+    }
+
+    .category-icon {
+      width: 24px;
+      height: 24px;
+      margin-right: 8px;
+    }
+
+    .category-name {
+      display: inline-block;
+      font-weight: normal; /* Ensure font weight stays normal */
+    }
+
+    .categoria-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .cuadro {
+      width: 30px;
+      height: 30px;
+      background-color: #ddd;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+
+    .category-name, .category {
+      pointer-events: none;  /* Prevent interaction */
+    }
+
+    .reset-button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #fdb813;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s;
+    }
+
+    .reset-button:hover {
+      background-color: #fca50a;
+    }
+
+    @media (max-width: 600px) {
+      .category-name {
+        display: none;
+      }
+    }
+  </style>
+
+  
+<!-- Inclusión del encabezado -->
+{% include 'productos/header.html' %}
+
+<!-- Contenido Principal -->
+<main>
+  <div class="main-container">
+    <nav class="sidebar">
+      <!-- Mensaje de Modo Filtro -->
+      <div id="filter-mode-message" class="filter-mode-message inactive">Modo En Filtro: Apagado</div>
+    
+      <h2>Categorías</h2>
+      <ul id="category-menu">
+        {% for category in categories %}
+        <li class="category-item">
+          <div class="category" data-category="{{ category.name }}">
+            {% if category.icon %}
+            <img src="{{ category.icon.url }}" alt="{{ category.name }}" class="category-icon" />
+            {% else %}
+            <img src="{% static 'default-icon.png' %}" alt="{{ category.name }}" class="category-icon" />
+            {% endif %}
+            <span class="category-name">{{ category.name }}</span>
+          </div>
+          <div class="categoria-container">
+            <div class="cuadro" id="cuadro_{{ category.name|slugify }}" data-category="{{ category.name }}" onclick="toggleAnimation(this)"></div>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+      
+      <!-- Botón de Restablecer Filtros -->
+      <button id="reset-filters" class="reset-button" onclick="resetFilters()">Restablecer Filtros</button>
+    </nav>
+    <div id="datos" style="display:none;"></div>
+  </div>
+
+  <!-- Contenedor de artículos -->
+  <div class="contenedor">
+    {% for article in articles %}
+      <div class="card__father">
+        <input type="checkbox" id="card-{{ forloop.counter }}" class="card-checkbox" />
+        <div class="card">
+          <label for="card-{{ forloop.counter }}">
+            <div class="card__front">
+              <div class="image">
+                {% if article.image %}
+                  <img src="{{ article.image.url }}" alt="Article Image" />
+                {% else %}
+                  <div class="no-image"></div>
+                {% endif %}
+              </div>
+              <div class="price">
+                <i class="fas fa-dollar-sign">{{ article.precio }} USD</i> 
+              </div>
+            </div>
+            <div class="card__back">
+              <div class="info">
+                <div class="category">
+                  <p>
+                    Categoría: 
+                    <br>
+                    {{ article.categories.name }}
+                  </p>
+                </div>
+                <div class="user">
+                  <i class="fas fa-user"></i>
+                  <p>{{ article.user.username }}</p>
+                </div>
+              </div>
+              <div class="body__card_back">
+                <h2>{{ article.title }}</h2>
+                <div class="description_article">
+                  <p>{{ article.content|safe }}</p>
+                </div>
+              </div>
+              <div class="leermas">
+                <a href="{% url 'article' article.id %}">Leer Más</a>
+              </div>
+              <form action="{% url 'agregar_al_carrito' article.id %}" method="post">
+                {% csrf_token %}
+                <button class="add-to-cart" type="submit">
+                  <i class="fas fa-shopping-cart"></i>
+                </button>
+              </form>
+            </div>
+          </label>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</main>
+
+</body>
+
+

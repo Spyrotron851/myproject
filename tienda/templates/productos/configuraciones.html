@@ -1,0 +1,147 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles-configuraciones.css' %}" />
+{% include 'productos/header.html' %}
+
+{% if latest_message %}
+    <div class="alert {% if latest_message.tags == 'success' %}alert-success{% elif latest_message.tags == 'error' %}alert-danger{% endif %}">
+        {{ latest_message }}
+    </div>
+{% endif %}
+
+<script>
+  function ocultarFormularios() {
+    var formularios = document.querySelectorAll('.form-text form');
+    for (var i = 0; i < formularios.length; i++) {
+      formularios[i].style.display = 'none';
+    }
+  }
+
+  window.onload = ocultarFormularios;
+
+  function mostrarContenido(opcion) {
+    document.getElementById('initial-form-container').style.display = 'none';
+    ocultarFormularios();
+    document.getElementById('form-' + opcion).style.display = 'block';
+  }
+
+  function showDesplegable(productId, productTitle, productPrecio, productContent, productCategoryId) {
+    document.getElementById('desplegable-title').textContent = productTitle;
+    var desplegableForm = document.getElementById('desplegable-form');
+
+    // Crear un formulario dinámicamente
+    var formHtml = `
+      <div class="form-group">
+        <label for="title">Título:</label>
+        <input type="text" class="form-control" id="title" name="title" value="${productTitle}">
+      </div>
+      <br>
+      <div class="form-group">
+        <label for="precio">Precio:</label>
+        <input type="number" class="form-control" id="precio" name="precio" step="0.01" min="0" value="${productPrecio}">
+      </div>
+      <br>
+      <div class="form-group">
+        <label for="content">Contenido:</label>
+        <input type="text" class="form-control" id="content" name="content" value="${productContent}">
+      </div>
+      <br>
+      <div class="form-group">
+        <label for="image">Imagen:</label>
+        <input type="file" class="form-control" id="image" name="image">
+      </div>
+      <br>
+      <div class="form-group">
+        <label for="category">Categoría:</label>
+        <select class="form-control" id="category" name="category">
+          {% for category in categories %}
+            <option value="{{ category.id }}" {% if category.id == productCategoryId %}selected{% endif %}>{{ category.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <br>
+      <input type="hidden" name="product_id" value="${productId}">
+    `;
+    desplegableForm.innerHTML = formHtml;
+    document.getElementById('desplegable-fixed').style.display = 'block';
+  }
+
+  function detenerPropagacion(event) {
+    event.stopPropagation();
+  }
+</script>
+
+<div class='container'>
+  <div class="separador-container">
+    <div class="in-separador-container">
+      <div class="opcion" onclick="mostrarContenido('opc1')">Configuración de Información De Compra</div>
+      <div class="opcion" onclick="mostrarContenido('opc2')">Configuración de Información De Productos</div>
+      <div class="opcion" onclick="mostrarContenido('opc3')">Configuración de Usuario</div>
+      <div class="opcion" onclick="mostrarContenido('opc4')">Configuración de Pagos</div>
+    </div>
+  </div>
+
+  <div class="configuraciones-container">
+    <div class='title'>
+      <h1>Configuraciones</h1>
+    </div>
+    <div id='initial-form-container' class='initial-form-container'>
+      <div class='initial-form-text'>
+        <h4>Selecciona Una Opción Para Configurar</h4>
+      </div>
+    </div>
+
+    <div class='form-text'>
+      <form id="form-opc1" method="post" action="">
+        {% csrf_token %}
+        {{ vendedor_form.as_p }}
+        <div class="form-group">
+          <input type="submit" name="guardar_opcion1" value="Guardar Cambios" class="submit-btn" />
+        </div>
+      </form>
+
+      <form id="form-opc2" method="post" action="" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-text">
+            {% for producto in productos_usuario %}
+            <div class="product-box" data-id="{{ producto.id }}" 
+                 onclick="showDesplegable('{{ producto.id }}', '{{ producto.title }}', '{{ producto.precio }}', '{{ producto.content }}', '{{ producto.categories.id }}')">
+                <div class="product" style="display: flex; align-items: center;">
+                    <span>{{ producto.title }}</span>
+                    {% if producto.image %}
+                    <img src="{{ producto.image.url }}" alt="{{ producto.title }}" 
+                         style="width: 50px; height: 50px; object-fit: cover; margin-left: auto;">
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div id="desplegable-fixed" class="desplegable" onclick="detenerPropagacion(event)">
+            <div class="producto-info">
+                <p id="desplegable-title">Información del Producto</p>
+                <div id="desplegable-form"></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <input type="submit" name="guardar_opcion2" value="Guardar Cambios" class="submit-btn" />
+        </div>
+      </form>
+
+      <form id="form-opc3" method="post" action="">
+        {% csrf_token %}
+        {{ user_form.as_p }}
+        <div class="form-group">
+            <input type="submit" name="guardar_opcion3" value="Guardar Cambios" class="submit-btn" />
+        </div>
+      </form>
+
+      <form id="form-opc4" method="post" action="">
+        {% csrf_token %}
+        {{ payment_form.as_p }}
+        <div class="form-group">
+          <input type="submit" name="guardar_opcion4" value="Guardar Cambios" class="submit-btn" />
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+

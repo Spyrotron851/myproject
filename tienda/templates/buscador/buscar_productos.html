@@ -1,0 +1,9 @@
+{% block content %}
+    <h1>Búsqueda de productos</h1>
+    <form action="{% url 'buscar_productos' %}" method="post">
+        {% csrf_token %}
+        <label for="title">Titulo:</label>
+        <input type="text" name="title" id="title">
+        <input type="submit" value="Buscar">
+    </form>
+{% endblock %}

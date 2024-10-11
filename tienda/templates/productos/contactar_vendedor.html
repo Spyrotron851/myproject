@@ -1,0 +1,13 @@
+<!-- contactar_vendedor.html -->
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles-configuraciones.css' %}" />
+{% include 'productos/header.html' %}
+
+<div class="container">
+    <h2>Contactar al Vendedor</h2>
+    <form method="post" action="">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Enviar</button>
+    </form>
+</div>
